@@ -1,3 +1,6 @@
+import { AlertService } from './../../resources/services/alert.service';
+import { LoginService } from './../../resources/services/login.service';
+import { RequestLogin } from '../../resources/models/RequestLogin';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  public requestLogin: RequestLogin; 
+
+  constructor(private loginService: LoginService, private alertService: AlertService) { }
 
   ngOnInit(): void {
+    this.requestLogin = new RequestLogin();
   }
 
+  public doLogin() :void {
+    this.loginService.doLogin(this.requestLogin).subscribe((data) => {
+      this.alertService.info('Funcionalidade ainda não implementada');
+    },
+    (httpError) => {
+      this.alertService.error(httpError.error.message);
+    }
+
+    );
+  }
 }
